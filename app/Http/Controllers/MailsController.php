@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Mail;
 use App\Models\MTAServer;
+use App\Libraries\JETDelivery;
 
 class MailsController extends Controller
 {
@@ -44,8 +45,43 @@ class MailsController extends Controller
         ];
     }
 
-    public function createItem(Request $request)
+    public function createItem(Request $request, JETDelivery $jetDelivery)
     {
-        
+        // Do Some Validation
+        $validator = Validator::make($request->all(), [
+            'fromName' => 'required|max:50',
+            'fromEmail' => 'required|max:255',
+            'toEmail' => 'required',
+            'subject' => 'required|max:100',
+            'message' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+          return ["statusCode" => 0, "statusMessage" => "Parameter Validation Failed: Check your inputs."];
+        }
+
+        // Get Comma-separated emails to list
+        $toEmails = explode(",", $request->get('toEmail'));
+
+        $delaySeconds = 5;
+
+        // Loop over all email addresses and push separate Job for each
+        foreach($toEmails as $email)
+        {
+            $job = (new \App\Jobs\SendMailJob([
+                'fromName'=>$request->get('fromName'),
+                'fromEmail'=>$request->get('fromEmail'),
+                'toEmail'=>trim($email),
+                'subject'=>$request->get('subject'),
+                'message'=>$request->get('message')
+            ], $jetMailer))->delay(\Carbon\Carbon::now()->addSeconds($delaySeconds));
+            
+            // Delay 5 seconds between each job
+            $delaySeconds+=5;
+
+            dispatch($job);
+        }
+
+        return ["statusCode" => 1, "statusMessage" => "Email Scheduled for Delivers"];
     }
 }
