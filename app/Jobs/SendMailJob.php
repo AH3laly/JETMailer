@@ -37,11 +37,23 @@ class SendMailJob implements ShouldQueue
     public function handle()
     {
         // Load Available MTA Server from Database
+        $this->loadMTAServers();
 
-        // Deliver the email message using any MTA server
+        // Save Email Message to Database
+        $emailMessage = $this->saveEmailToDatabase();
+
+        // Send the email message using any MTA server
+        $delivered = $this->sendEmail($emailMessage);
 
         // Update Email Status based on the value of $delivery
-
+        if($delivered){
+            // Update the Email status to Delivered
+            Mmail::where('id', $emailMessage->id)->update(['status' => 'Delivered']);
+        } else {
+            // Update the Email status Failed
+            Mmail::where('id', $emailMessage->id)->update(['status' => 'Failed']);
+            throw new \Exception("Failed to deliver message {$emailMessage->id} by all available MTAservers.");
+        }
     }
 
     private function saveEmailToDatabase()
