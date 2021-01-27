@@ -82,8 +82,19 @@ class SendMailJob implements ShouldQueue
 
     private function getMTAServer()
     {
-        // Get Available MTA Server
-        // IMPORTANT: Consider using Load Balancing
+        // If it's only single MTAServer, then no sense for load balancing
+        if(count($this->mtaServers)==1){
+            return $this->mtaServers->first();
+        }
+        
+        // Proceed with balancing
+        // I am using rounding queue for balancing by Popping the last element from the collection,
+        // then prepend it the the colection again,
+        // So, the next pop will return the next element and so on
+        $mtaServer = $this->mtaServers->pop();
+        $this->mtaServers->prepend($mtaServer);
+        
+        return $mtaServer;
     }
 
     private function deliverEmail()
