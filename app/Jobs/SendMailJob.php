@@ -23,10 +23,10 @@ class SendMailJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($data, JETCustomMailer $jetMailer)
+    public function __construct($data, JETDelivery $jetDelivery)
     {
         $this->data = $data;
-        $this->jetMailer = $jetMailer;
+        $this->jetDelivery = $jetDelivery;
     }
 
     /**
@@ -97,9 +97,54 @@ class SendMailJob implements ShouldQueue
         return $mtaServer;
     }
 
-    private function deliverEmail()
+    private function sendEmail($emailMessage)
     {
-        // Send Email Message
+        $mtsServersCount = count($this->mtaServers);
+        $delivery = [];
+
+        for($i=0; $i<$mtsServersCount; $i++)
+        {
+            // Get an MTAServer to deliver the email
+            $mtaServer = $this->getMTAServer();
+            
+            $this->jetDelivery->setServerConfig($mtaServer->host, $mtaServer->username, $mtaServer->password, $mtaServer->port, $mtaServer->security);
+
+            // Deliver the Email Message using JETDelivery custom Library
+            $delivery = $this->jetDelivery->deliverEmail([
+                'fromName'=>$emailMessage['fromName'],
+                'fromEmail'=>$emailMessage['fromEmail'],
+                'toEmail'=>$emailMessage['toEmail'],
+                'isHTML'=>true,
+                'subject'=>$emailMessage['subject'],
+                'message'=>$emailMessage['message'],
+            ]);
+
+            if($delivery['status'] == 1){
+                // Delivery was successful, so no need to continue the loop,
+                
+                // Log Successful Delivery
+                Logger::create([
+                    'subject' => 'Successful Delivery',
+                    'message' => 'Message '.$emailMessage['id'].' Delivered Successfully by '.$mtaServer->host
+                ]);
+
+                break;
+            }
+
+            // It's Important to know which MTA Server is failing,
+            // So, with any failure, increment The MTAServer failures value
+            MTAServers::where('id', $mtaServer->id)->increment('failures');
+
+            // Log Failed Delivery
+            Logger::create([
+                'subject' => 'Failed Delivery',
+                'message' => 'Message '.$emailMessage['id'].' Delivery Failed by '.$mtaServer->host." ({$delivery['message']})"
+            ]);
+
+            // Continue the loop until the $delivery['status'] is true or the end on loop reached
+        }
+
+        return $delivery['status'];
     }
 
 }
