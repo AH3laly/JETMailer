@@ -47,6 +47,14 @@ class SendMailJob implements ShouldQueue
     private function saveEmailToDatabase()
     {
         // Save Email Item To The Database
+        return Mail::create([
+            'fromName' => $this->data['fromName'],
+            'fromEmail' => $this->data['fromEmail'],
+            'toEmail' => $this->data['toEmail'],
+            'subject' => $this->data['subject'],
+            'message' => $this->data['message'],
+            'status' => 1
+        ]);
     }
 
     private function loadMTAServers()
