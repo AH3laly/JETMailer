@@ -9,7 +9,7 @@ class Mail extends Model
 {
     use HasFactory;
 
-    public $table = 'emails';
+    public $table = 'mails';
     
     protected $fillable = [
         'fromName',
