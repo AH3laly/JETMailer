@@ -18,6 +18,10 @@ class SendMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    private $data = [];
+    private $mtaServers;
+    private $jetMailer;
+    
     /**
      * Create a new job instance.
      *
