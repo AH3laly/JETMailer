@@ -59,7 +59,25 @@ class SendMailJob implements ShouldQueue
 
     private function loadMTAServers()
     {
-        // Load MTA Servers List
+        // Get enabled MTA servers list
+        $this->mtaServers = MTAServer::where('enabled', 1)->get();
+
+        if(count($this->mtaServers) == 0){
+            Logger::create([
+                'category' => 'MTA',
+                'subject' => 'WARNING: NO MTA Servers Available ',
+                'message' => 'There must be at least one MTA server enabled to deliver emails'
+            ]);
+
+            // Throw an Exception to move this Job to failed JOBs,
+            // So we can retry them later using php artisan queue:retry
+            throw new \Exception("NO MTA Servers Available");
+        }
+
+        // Shuffle the collection because I don't like to start with the same server everytime
+        // So, by using shuffle I am starting with a random server,
+        // regardingless the order returend from the database
+        $this->mtaServers = $this->mtaServers->shuffle();
     }
 
     private function getMTAServer()
