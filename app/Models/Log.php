@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Log extends Model
 {
     use HasFactory;
+
+    public $table = 'logs';
+
+    protected $fillable = [
+        'category',
+        'subject',
+        'message'
+    ];
 }
