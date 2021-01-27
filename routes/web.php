@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function() {
+    return View::make('pages.dashboard');
+ });
+ 
+ Route::get('/emails', function() {
+    return View::make('pages.emails');
+ });
+ 
+ Route::get('/newemail', function() {
+    return View::make('pages.newemail');
+ });
