@@ -64,7 +64,7 @@ class MailsController extends Controller
           return [
                 "statusCode" => 0, 
                 "statusMessage" => "Parameter Validation Failed: Check your inputs.",
-                "errors" => $validator->errors()
+                "errors" => $validator->errors()->all()
             ];
         }
 
