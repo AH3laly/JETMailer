@@ -4,19 +4,22 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class CreateEmail extends Command
+use App\Libraries\JETDelivery;
+
+class CreateMail extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'jetMailer:CreateEmail
+    protected $signature = 'jetMailer:CreateMail
         {--fromName= : From Name} 
         {--fromEmail= : From Email}
         {--toEmail= : To Email}
         {--subject= : Email Subject}
-        {--message= : Email Message}';
+        {--body= : Email Body}
+        {--format= : Email format (text | html | markdown)}';
 
     /**
      * The console command description.
@@ -40,15 +43,16 @@ class CreateEmail extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(JETDelivery $jetDelivery)
     {
         $job = (new \App\Jobs\SendMailJob([
             'fromName'=>$this->option('fromName'), 
             'fromEmail'=>$this->option('fromEmail'),
             'toEmail'=>$this->option('toEmail'),
             'subject'=>$this->option('subject'),
-            'message'=>$this->option('message')
-        ]));
+            'body'=>$this->option('body'),
+            'format'=>$this->option('format')
+        ], $jetDelivery));
         
         dispatch($job);
         
