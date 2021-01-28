@@ -36,6 +36,11 @@
                         <td>{{item.toEmail}}</td>
                         <td><a data-toggle="modal" data-target="#myModal" v-on:click="viewEmail(item)" style="cursor:pointer">{{item.subject}}</a></td>
                         <td>{{item.created_at}}</td>
+                        <td><span :class="[
+                                item.status=='Delivered' ? 'label-success' : '', 
+                                item.status=='Failed' ? 'label-danger' : '', 
+                                item.status=='Scheduled' ? 'label-inverse' : '', 
+                            ]" class="label label-table">{{item.status}}</span></td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -65,6 +70,7 @@
                     <h4>{{currentItem.subject}}</h4>
                     <p>From {{currentItem.fromName}} <{{currentItem.fromEmail}}> <b>To</b> {{currentItem.toEmail}}</p>
                     <hr>
+                    <p>{{currentItem.body}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
