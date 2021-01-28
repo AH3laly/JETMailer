@@ -52,21 +52,29 @@
                 </div>
                 
                 <div class="col-md-6">
-                    <form class="form-horizontal" role="form">                                    
-                        
-                    <div class="form-group">
-                            <label class="col-md-2 control-label">Message</label>
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Body</label>
                             <div class="col-md-10">
-                                <textarea v-model="email.message"  class="form-control" rows="5"></textarea>
-                                <span class="help-block"><small>Email Message.</small></span>
+                                    <textarea v-model="email.body"  class="form-control" rows="8"></textarea>
+                                    <span class="help-block"><small>Email Body.</small></span>
                             </div>
                         </div>
                         <div class="form-group">
-                        <label class="col-md-2 control-label">&nbsp;</label>
+                            <label class="col-sm-2 control-label">Format</label>
+                            <div class="col-sm-3">
+                                <select v-model="email.format" class="form-control">
+                                    <option value="text">TEXT</option>
+                                    <option value="html">HTML</option>
+                                    <option value="markdown">Markdown</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">&nbsp;</label>
                             <button v-on:click="scheduleEmail(email)" type="button" class="btn btn-purple waves-effect waves-light">Schedule Email</button>
                             <span :class="[statusCode==1 ? 'label-success' : '', statusCode==0 ? 'label-danger' : '']" class="label">{{statusMessage}}</span>
                         </div>
-                        
                     </form>
                 </div>
                 
@@ -88,7 +96,7 @@
     var app = new Vue({
         el: '#app',
         data: {
-            email: {},
+            email: {format:"text"},
             statusCode: 2,
             statusMessage: ""
         },
