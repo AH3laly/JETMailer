@@ -17,21 +17,21 @@
                 <div class="col-lg-3 col-sm-6">
                     <div class="widget-inline-box text-center">
                         <h3><i class="text-primary md md-email"></i> <b>{{stats.totalEmails}}</b></h3>
-                        <h4 class="text-muted">Total Emails</h4>
+                        <h4 class="text-muted">Total Mails</h4>
                     </div>
                 </div>
                 
                 <div class="col-lg-3 col-sm-6">
                     <div class="widget-inline-box text-center">
                         <h3><i class="text-success md md-email"></i> <b>{{stats.deliveredEmails}}</b></h3>
-                        <h4 class="text-muted">Delivered Emails</h4>
+                        <h4 class="text-muted">Delivered Mails</h4>
                     </div>
                 </div>
                 
                 <div class="col-lg-3 col-sm-6">
                     <div class="widget-inline-box text-center">
                         <h3><i class="text-pink md md-block"></i> <b>{{stats.failedEmails}}</b></h3>
-                        <h4 class="text-muted">Failed Emails</h4>
+                        <h4 class="text-muted">Failed Mails</h4>
                     </div>
                 </div>
                 

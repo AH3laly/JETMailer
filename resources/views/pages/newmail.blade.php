@@ -82,7 +82,7 @@
     
     // Activate Current Tab
     $("#sidebar-menu li").removeClass("active");
-    $("#sidebar-menu li #tab-newemail").addClass("active");
+    $("#sidebar-menu li #tab-newmail").addClass("active");
 
     // Vue Implementation
     var app = new Vue({

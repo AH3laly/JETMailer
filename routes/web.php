@@ -17,10 +17,10 @@ Route::get('/', function() {
     return View::make('pages.dashboard');
  });
  
- Route::get('/emails', function() {
-    return View::make('pages.emails');
+ Route::get('/mails', function() {
+    return View::make('pages.mails');
  });
  
- Route::get('/newemail', function() {
-    return View::make('pages.newemail');
+ Route::get('/newmail', function() {
+    return View::make('pages.newmail');
  });

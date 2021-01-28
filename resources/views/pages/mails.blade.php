@@ -4,13 +4,13 @@
 <!-- Page-Title -->
 <div class="row">
     <div class="col-sm-12">
-        <h4 class="page-title">JETMailer Emails</h4>
+        <h4 class="page-title">JETMailer Mails</h4>
         <ol class="breadcrumb">
             <li>
                 <a href="/">JETMailer</a>
             </li>
             <li class="active">
-                Emails
+                Mails
             </li>
         </ol>
     </div>
@@ -85,7 +85,7 @@
     
         // Activate Current Tab
         $("#sidebar-menu li").removeClass("active");
-        $("#sidebar-menu li #tab-emails").addClass("active");
+        $("#sidebar-menu li #tab-mails").addClass("active");
 
         // Vue Implementation
         var app = new Vue({

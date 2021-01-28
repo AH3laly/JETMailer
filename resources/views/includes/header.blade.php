@@ -50,8 +50,8 @@
                <a href="#" class="ui2-effect active"><i class="ti-home"></i> <span> JETMailer </span> </a>
                <ul class="list-unstyled">
                   <li id="tab-dashboard"><a href="/">Dashboard</a></li>
-                  <li id="tab-emails"><a href="/emails">Mails</a></li>
-                  <li id="tab-newemail"><a href="/newemail">New Mail</a></li>
+                  <li id="tab-mails"><a href="/mails">Mails</a></li>
+                  <li id="tab-newmail"><a href="/newmail">New Mail</a></li>
                </ul>
             </li>
          </ul>
