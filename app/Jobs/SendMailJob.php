@@ -9,7 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-use App\Models\Logger;
+use App\Models\Log;
 use App\Models\Mail;
 use App\Models\MTAServer;
 use App\Libraries\JETDelivery;
@@ -20,8 +20,8 @@ class SendMailJob implements ShouldQueue
 
     private $data = [];
     private $mtaServers;
-    private $jetMailer;
-    
+    private $jetDelivery;
+
     /**
      * Create a new job instance.
      *
@@ -52,24 +52,29 @@ class SendMailJob implements ShouldQueue
         // Update Email Status based on the value of $delivery
         if($delivered){
             // Update the Email status to Delivered
-            Mmail::where('id', $emailMessage->id)->update(['status' => 'Delivered']);
+            Mail::where('id', $emailMessage->id)->update(['status' => 'Delivered']);
         } else {
             // Update the Email status Failed
-            Mmail::where('id', $emailMessage->id)->update(['status' => 'Failed']);
+            Mail::where('id', $emailMessage->id)->update(['status' => 'Failed']);
             throw new \Exception("Failed to deliver message {$emailMessage->id} by all available MTAservers.");
         }
     }
 
     private function saveEmailToDatabase()
     {
+        // If Mail format is html or markdown, then it's html
+        $isHtml = in_array($this->data['format'], ['html','markdown']) ? true : false;
+
         // Save Email Item To The Database
         return Mail::create([
             'fromName' => $this->data['fromName'],
             'fromEmail' => $this->data['fromEmail'],
             'toEmail' => $this->data['toEmail'],
             'subject' => $this->data['subject'],
-            'message' => $this->data['message'],
-            'status' => 1
+            'body' => $this->data['body'],
+            'format' => $this->data['format'],
+            'isHtml' => $isHtml,
+            'status' => 'Scheduled'
         ]);
     }
 
@@ -79,7 +84,7 @@ class SendMailJob implements ShouldQueue
         $this->mtaServers = MTAServer::where('enabled', 1)->get();
 
         if(count($this->mtaServers) == 0){
-            Logger::create([
+            Log::create([
                 'category' => 'MTA',
                 'subject' => 'WARNING: NO MTA Servers Available ',
                 'message' => 'There must be at least one MTA server enabled to deliver emails'
@@ -132,14 +137,15 @@ class SendMailJob implements ShouldQueue
                 'toEmail'=>$emailMessage['toEmail'],
                 'isHTML'=>true,
                 'subject'=>$emailMessage['subject'],
-                'message'=>$emailMessage['message'],
+                'body'=>$emailMessage['body'],
             ]);
 
             if($delivery['status'] == 1){
                 // Delivery was successful, so no need to continue the loop,
                 
                 // Log Successful Delivery
-                Logger::create([
+                Log::create([
+                    'category' => 'Mail',
                     'subject' => 'Successful Delivery',
                     'message' => 'Message '.$emailMessage['id'].' Delivered Successfully by '.$mtaServer->host
                 ]);
@@ -149,10 +155,11 @@ class SendMailJob implements ShouldQueue
 
             // It's Important to know which MTA Server is failing,
             // So, with any failure, increment The MTAServer failures value
-            MTAServers::where('id', $mtaServer->id)->increment('failures');
+            MTAServer::where('id', $mtaServer->id)->increment('failures');
 
             // Log Failed Delivery
-            Logger::create([
+            Log::create([
+                'category' => 'Mail',
                 'subject' => 'Failed Delivery',
                 'message' => 'Message '.$emailMessage['id'].' Delivery Failed by '.$mtaServer->host." ({$delivery['message']})"
             ]);
