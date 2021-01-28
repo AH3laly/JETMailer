@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Validator;
 
 use App\Libraries\JETDelivery;
 
@@ -45,6 +46,24 @@ class CreateMail extends Command
      */
     public function handle(JETDelivery $jetDelivery)
     {
+
+        // Validate Inputs
+        $validator = Validator::make($this->options(), [
+            'fromName' => 'required|max:50',
+            'fromEmail' => 'required|max:255',
+            'toEmail' => 'required',
+            'subject' => 'required|max:100',
+            'body' => 'required',
+            'format' => 'required'
+        ]);
+
+        if ($validator->fails()) { 
+            array_map(function($error){
+                $this->error($error);
+            }, $validator->errors()->all());
+            return 1;
+        }
+
         $job = (new \App\Jobs\SendMailJob([
             'fromName'=>$this->option('fromName'), 
             'fromEmail'=>$this->option('fromEmail'),
@@ -55,6 +74,8 @@ class CreateMail extends Command
         ], $jetDelivery));
         
         dispatch($job);
+
+        $this->info("Message scheduled for delivery");
         
         return 0;
     }
