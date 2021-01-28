@@ -41,7 +41,7 @@ class MailsController extends Controller
         $itemsCount = Mail::get()->count();
 
         return [
-            "items" => Mail::skip($skip)->take($itemsPerPage)->get(),
+            "items" => Mail::skip($skip)->take($itemsPerPage)->orderByDesc('id')->get(),
             "itemsCount" => $itemsCount,
             "pages" => ceil($itemsCount/$itemsPerPage),
             "currentPage" => $page
