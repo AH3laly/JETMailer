@@ -61,7 +61,11 @@ class MailsController extends Controller
         ]);
 
         if ($validator->fails()) {
-          return ["statusCode" => 0, "statusMessage" => "Parameter Validation Failed: Check your inputs."];
+          return [
+                "statusCode" => 0, 
+                "statusMessage" => "Parameter Validation Failed: Check your inputs.",
+                "errors" => $validator->errors()
+            ];
         }
 
         // Get Comma-separated emails to list
