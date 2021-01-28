@@ -64,11 +64,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{currentItem.subject}}</h4>
                 </div>
                 <div class="modal-body">
-                    <h4>{{currentItem.subject}}</h4>
-                    <p>From {{currentItem.fromName}} <{{currentItem.fromEmail}}> <b>To</b> {{currentItem.toEmail}}</p>
+                    <p>
+                        <b>From:</b> {{currentItem.fromName}}<{{currentItem.fromEmail}}>
+                    </p>
+                    <p>
+                        <b>To:</b> {{currentItem.toEmail}}
+                    </p>
+                    <p>
+                        <b>Subject:</b>{{currentItem.subject}}
+                    </p>
                     <hr>
                     <p>{{currentItem.body}}</p>
                 </div>
