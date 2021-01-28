@@ -56,7 +56,8 @@ class MailsController extends Controller
             'fromEmail' => 'required|max:255',
             'toEmail' => 'required',
             'subject' => 'required|max:100',
-            'message' => 'required'
+            'body' => 'required',
+            'format' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -65,6 +66,11 @@ class MailsController extends Controller
 
         // Get Comma-separated emails to list
         $toEmails = explode(",", $request->get('toEmail'));
+
+        // Make sure the array has no Empty elements
+        // Ex: if user input contains tow commas ',,' 
+        // the explode function will result some empty values
+        $toEmails = array_filter($toEmails);
 
         $delaySeconds = 5;
 
@@ -76,8 +82,9 @@ class MailsController extends Controller
                 'fromEmail'=>$request->get('fromEmail'),
                 'toEmail'=>trim($email),
                 'subject'=>$request->get('subject'),
-                'message'=>$request->get('message')
-            ], $jetMailer))->delay(\Carbon\Carbon::now()->addSeconds($delaySeconds));
+                'body'=>$request->get('body'),
+                'format'=>$request->get('format')
+            ], $jetDelivery))->delay(\Carbon\Carbon::now()->addSeconds($delaySeconds));
             
             // Delay 5 seconds between each job
             $delaySeconds+=5;
@@ -85,6 +92,6 @@ class MailsController extends Controller
             dispatch($job);
         }
 
-        return ["statusCode" => 1, "statusMessage" => "Email Scheduled for Delivers"];
+        return ["statusCode" => 1, "statusMessage" => "Email Scheduled for Delivery"];
     }
 }
