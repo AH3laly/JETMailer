@@ -14,30 +14,44 @@
     <div class="col-sm-12">
         <div class="card-box widget-inline">
             <div class="row">
-                <div class="col-lg-3 col-sm-6">
+                <div class="col-lg-2 col-sm-6">
                     <div class="widget-inline-box text-center">
                         <h3><i class="text-primary md md-email"></i> <b>{{stats.totalEmails}}</b></h3>
                         <h4 class="text-muted">Total Mails</h4>
                     </div>
                 </div>
                 
-                <div class="col-lg-3 col-sm-6">
+                <div class="col-lg-2 col-sm-6">
+                    <div class="widget-inline-box text-center">
+                        <h3><i class="text-success md md-email"></i> <b>{{stats.scheduledEmails}}</b></h3>
+                        <h4 class="text-muted">Scheduled Mails</h4>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-sm-6">
                     <div class="widget-inline-box text-center">
                         <h3><i class="text-success md md-email"></i> <b>{{stats.deliveredEmails}}</b></h3>
                         <h4 class="text-muted">Delivered Mails</h4>
                     </div>
                 </div>
                 
-                <div class="col-lg-3 col-sm-6">
+                <div class="col-lg-2 col-sm-6">
                     <div class="widget-inline-box text-center">
                         <h3><i class="text-pink md md-block"></i> <b>{{stats.failedEmails}}</b></h3>
                         <h4 class="text-muted">Failed Mails</h4>
                     </div>
                 </div>
                 
-                <div class="col-lg-3 col-sm-6">
+                <div class="col-lg-2 col-sm-6">
                     <div class="widget-inline-box text-center b-0">
-                        <h3><i class="text-purple md md-flight"></i> <b>{{stats.activeMTAs}}</b></h3>
+                        <h3><i class="text-primary md md-flight"></i> <b>{{stats.totalMTAs}}</b></h3>
+                        <h4 class="text-muted">Total MTAs</h4>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-sm-6">
+                    <div class="widget-inline-box text-center b-0">
+                        <h3><i class="text-success md md-flight"></i> <b>{{stats.activeMTAs}}</b></h3>
                         <h4 class="text-muted">Active MTAs</h4>
                     </div>
                 </div>

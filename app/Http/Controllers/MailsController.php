@@ -19,8 +19,10 @@ class MailsController extends Controller
         // But as it's not a requirement for this test, I am getting statistics by querying the database.
         return [
             'totalEmails' => Mail::get()->count(),
-            'deliveredEmails' => Mail::where("status", 1)->get()->count(),
-            'failedEmails' => Mail::where("status", 0)->get()->count(),
+            'scheduledEmails' => Mail::where("status",  'Scheduled')->get()->count(),
+            'failedEmails' => Mail::where("status",  'Failed')->get()->count(),
+            'deliveredEmails' => Mail::where("status", 'Delivered')->get()->count(),
+            'totalMTAs' => MTAServer::get()->count(),
             'activeMTAs' => MTAServer::where("enabled", 1)->get()->count()
         ];
     }
