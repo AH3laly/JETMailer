@@ -22,6 +22,10 @@
 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 <![endif]-->
 
+<script type="text/javascript">
+    var baseUrl = "{{$app->make('url')->to('/')}}";
+</script>
+
 <script src="assets/js/modernizr.min.js"></script>
 
 <!-- jQuery  -->
