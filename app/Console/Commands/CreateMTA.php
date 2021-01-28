@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Validator;
+
 use App\Models\MTAServer;
 
 class CreateMTA extends Command
@@ -43,6 +45,22 @@ class CreateMTA extends Command
      */
     public function handle()
     {
+        // Validate Inputs
+        $validator = Validator::make($this->options(), [
+            'host' => 'required|max:255',
+            'port' => 'required|max:4',
+            'security' => 'required|max:4',
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        if ($validator->fails()) { 
+            array_map(function($error){
+                $this->error($error);
+            }, $validator->errors()->all());
+            return 1;
+        }
+
         MTAServer::create([
             'host' => $this->option('host'),
             'port' => $this->option('port'),
@@ -53,7 +71,7 @@ class CreateMTA extends Command
             'enabled' => 1
         ]);
         
-        echo "MTA Created".PHP_EOL;
+        $this->info("MTA server created.");
         return 0;
     }
 }
