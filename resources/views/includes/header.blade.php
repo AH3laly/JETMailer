@@ -45,7 +45,7 @@
       <!--- Divider -->
       <div id="sidebar-menu">
          <ul>
-            <li class="text-muted menu-title">Navigation</li>
+
             <li class="ui_sub">
                <a href="#" class="ui2-effect active"><i class="ti-home"></i> <span> JETMailer </span> </a>
                <ul class="list-unstyled">
