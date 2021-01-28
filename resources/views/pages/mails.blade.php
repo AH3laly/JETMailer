@@ -26,6 +26,7 @@
                         <th>From</th>
                         <th>To</th>
                         <th>Subject</th>
+                        <th>Date</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -34,7 +35,7 @@
                         <td><a data-toggle="modal" data-target="#myModal" v-on:click="viewEmail(item)" style="cursor:pointer">{{item.fromName}} <{{item.fromEmail}}></a></td>
                         <td>{{item.toEmail}}</td>
                         <td><a data-toggle="modal" data-target="#myModal" v-on:click="viewEmail(item)" style="cursor:pointer">{{item.subject}}</a></td>
-                        <td><span :class="[item.status==1 ? 'label-success' : 'label-danger']" class="label label-table">Active</span></td>
+                        <td>{{item.created_at}}</td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -64,7 +65,6 @@
                     <h4>{{currentItem.subject}}</h4>
                     <p>From {{currentItem.fromName}} <{{currentItem.fromEmail}}> <b>To</b> {{currentItem.toEmail}}</p>
                     <hr>
-                    <p>{{currentItem.message}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
