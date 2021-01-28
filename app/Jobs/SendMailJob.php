@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Markdown;
 
 use App\Models\Log;
 use App\Models\Mail;
@@ -130,12 +131,17 @@ class SendMailJob implements ShouldQueue
             
             $this->jetDelivery->setServerConfig($mtaServer->host, $mtaServer->username, $mtaServer->password, $mtaServer->port, $mtaServer->security);
 
+            // Parse the Markdown content before delivering
+            if($emailMessage['format'] == 'markdown'){
+                $emailMessage['body'] = Markdown::parse($emailMessage['body']);
+            }
+
             // Deliver the Email Message using JETDelivery custom Library
             $delivery = $this->jetDelivery->deliverEmail([
                 'fromName'=>$emailMessage['fromName'],
                 'fromEmail'=>$emailMessage['fromEmail'],
                 'toEmail'=>$emailMessage['toEmail'],
-                'isHTML'=>true,
+                'isHTML'=>$emailMessage['isHtml'],
                 'subject'=>$emailMessage['subject'],
                 'body'=>$emailMessage['body'],
             ]);
