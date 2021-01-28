@@ -32,7 +32,7 @@ class JETDelivery extends PHPMailer
         $this->addAddress($message['toEmail']);
         $this->isHTML($message['isHTML']);
         $this->Subject = $message['subject'];
-        $this->Body = $message['message'];
+        $this->Body = $message['body'];
         $this->AltBody = $message['subject'];
         
         try {
