@@ -28,7 +28,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix'=>'mail'], function(){
     Route::get('/', [MailsController::class, 'getItems']);
     Route::get('/statistics', [MailsController::class, 'getStatistics']);
-    Route::get('{id}', [MailsController::class, 'getItem']);
     Route::post('/', [MailsController::class, 'createItem']);
 });
 
