@@ -152,7 +152,7 @@ class SendMailJob implements ShouldQueue
                 // Log Successful Delivery
                 Log::create([
                     'category' => 'Mail',
-                    'subject' => 'Successful Delivery',
+                    'subject' => 'Successful Delivery (Message: '.$emailMessage['id'].')',
                     'message' => 'Message '.$emailMessage['id'].' Delivered Successfully by '.$mtaServer->host
                 ]);
 
@@ -166,7 +166,7 @@ class SendMailJob implements ShouldQueue
             // Log Failed Delivery
             Log::create([
                 'category' => 'Mail',
-                'subject' => 'Failed Delivery',
+                'subject' => 'Failed Delivery (Message: '.$emailMessage['id'].')',
                 'message' => 'Message '.$emailMessage['id'].' Delivery Failed by '.$mtaServer->host." ({$delivery['message']})"
             ]);
 
