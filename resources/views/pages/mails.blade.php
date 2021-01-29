@@ -23,6 +23,7 @@
             <table id="demo-foo-filtering" class="table table-striped toggle-circle m-b-0" data-page-size="7">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>From</th>
                         <th>To</th>
                         <th>Subject</th>
@@ -33,6 +34,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in items">
+                        <td>{{item.id}}</td>
                         <td>{{item.fromName}} <{{item.fromEmail}}></td>
                         <td>{{item.toEmail}}</td>
                         <td><a data-toggle="modal" data-target="#myModal" v-on:click="viewEmail(item)" style="cursor:pointer">{{item.subject}}</a></td>
