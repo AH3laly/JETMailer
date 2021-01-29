@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\MailsController;
+use App\Http\Controllers\MTAServerController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,4 +29,8 @@ Route::group(['prefix'=>'mail'], function(){
     Route::get('/statistics', [MailsController::class, 'getStatistics']);
     Route::get('{id}', [MailsController::class, 'getItem']);
     Route::post('/', [MailsController::class, 'createItem']);
+});
+
+Route::group(['prefix'=>'mtaserver'], function(){
+    Route::get('/', [MTAServerController::class, 'getItems']);
 });

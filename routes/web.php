@@ -24,3 +24,7 @@ Route::get('/', function() {
  Route::get('/newmail', function() {
     return View::make('pages.newmail');
  });
+
+ Route::get('/mtaservers', function() {
+    return View::make('pages.mtaservers');
+ });
