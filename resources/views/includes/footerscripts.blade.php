@@ -13,7 +13,6 @@
 <script src="assets/plugins/jquery-knob/jquery.knob.js"></script>
 
 <script src="assets/js/jquery.core.js"></script>
-<script src="assets/js/jquery.app.js"></script>
 
 <!-- vue Library-->
 <script src="assets/js/vue.js"></script>
