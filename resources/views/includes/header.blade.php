@@ -53,6 +53,7 @@
                   <li id="tab-mails"><a href="/mails">Mails</a></li>
                   <li id="tab-newmail"><a href="/newmail">New Mail</a></li>
                   <li id="tab-mtaservers"><a href="/mtaservers">MTA Servers</a></li>
+                  <li id="tab-logs"><a href="/logs">Logs</a></li>
                </ul>
             </li>
          </ul>

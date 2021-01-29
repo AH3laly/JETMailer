@@ -28,3 +28,7 @@ Route::get('/', function() {
  Route::get('/mtaservers', function() {
     return View::make('pages.mtaservers');
  });
+
+ Route::get('/logs', function() {
+    return View::make('pages.logs');
+ });

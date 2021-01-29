@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\MailsController;
 use App\Http\Controllers\MTAServerController;
+use App\Http\Controllers\LogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +34,8 @@ Route::group(['prefix'=>'mail'], function(){
 
 Route::group(['prefix'=>'mtaserver'], function(){
     Route::get('/', [MTAServerController::class, 'getItems']);
+});
+
+Route::group(['prefix'=>'log'], function(){
+    Route::get('/', [LogController::class, 'getItems']);
 });
