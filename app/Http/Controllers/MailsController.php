@@ -76,6 +76,9 @@ class MailsController extends Controller
         // the explode function will result some empty values
         $toEmails = array_filter($toEmails);
 
+        // Remove duplicated Addresses
+        $toEmails = array_unique($toEmails);
+
         $delaySeconds = 5;
 
         // Loop over all email addresses and push separate Job for each
