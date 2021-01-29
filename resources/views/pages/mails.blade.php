@@ -26,6 +26,7 @@
                         <th>From</th>
                         <th>To</th>
                         <th>Subject</th>
+                        <th>Format</th>
                         <th>Date</th>
                         <th>Status</th>
                     </tr>
@@ -35,6 +36,7 @@
                         <td>{{item.fromName}} <{{item.fromEmail}}></td>
                         <td>{{item.toEmail}}</td>
                         <td><a data-toggle="modal" data-target="#myModal" v-on:click="viewEmail(item)" style="cursor:pointer">{{item.subject}}</a></td>
+                        <td>{{item.format.toUpperCase()}}</td>
                         <td>{{item.created_at}}</td>
                         <td><span :class="[
                                 item.status=='Delivered' ? 'label-success' : '', 
