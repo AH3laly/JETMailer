@@ -37,7 +37,7 @@
                         <td>{{item.id}}</td>
                         <td>{{item.fromName}} <{{item.fromEmail}}></td>
                         <td>{{item.toEmail}}</td>
-                        <td><a data-toggle="modal" data-target="#myModal" v-on:click="viewEmail(item)" style="cursor:pointer">{{item.subject}}</a></td>
+                        <td><a data-toggle="modal" data-target="#viewItem" v-on:click="viewItem(item)" style="cursor:pointer">{{item.subject}}</a></td>
                         <td>{{item.format.toUpperCase()}}</td>
                         <td>{{item.created_at}}</td>
                         <td><span :class="[
@@ -63,12 +63,12 @@
     </div>
 
     <!-- Mail Preview Modal -->
-    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="viewItem" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="viewItemLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">{{currentItem.subject}}</h4>
+                    <h4 class="modal-title" id="viewItemLabel">{{currentItem.subject}}</h4>
                 </div>
                 <div class="modal-body">
                     <p>
@@ -128,8 +128,8 @@
                         this.currentPage = response.data.currentPage;
                     })
                 },
-                viewEmail: function(email){
-                    this.currentItem = email;
+                viewItem: function(item){
+                    this.currentItem = item;
                 }
             }
         });
