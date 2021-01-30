@@ -83,6 +83,7 @@ rm -rf JETMailer/ > /dev/null 2>&1
 
 echo JETMailer is running on: http://localhost:8090
 echo
-echo 'To stop the Container execute: stop.sh'
-echo 'To start the Container execute: start.sh'
+echo 'To stop the JETMailer Containers execute: stop.sh'
+echo 'To start the JETMailer Containers execute: start.sh'
+echo 'To uninstall the JETMailer Containers execute: uninstall.sh'
 echo
