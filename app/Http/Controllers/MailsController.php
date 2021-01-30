@@ -79,7 +79,7 @@ class MailsController extends Controller
         // Remove duplicated Addresses
         $toEmails = array_unique($toEmails);
 
-        $delaySeconds = 5;
+        $delay = $delaySeconds = 2;
 
         // Loop over all email addresses and push separate Job for each
         foreach($toEmails as $email)
@@ -91,10 +91,10 @@ class MailsController extends Controller
                 'subject'=>$request->get('subject'),
                 'body'=>$request->get('body'),
                 'format'=>$request->get('format')
-            ], $jetDelivery))->delay(\Carbon\Carbon::now()->addSeconds($delaySeconds));
+            ], $jetDelivery))->delay(\Carbon\Carbon::now()->addSeconds($delay));
             
-            // Delay 5 seconds between each job
-            $delaySeconds+=5;
+            // Delay $delaySeconds seconds between each job
+            $delay+=$delaySeconds;
 
             dispatch($job);
         }
