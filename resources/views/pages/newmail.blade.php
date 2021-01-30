@@ -42,7 +42,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">To Email(s)</label>
+                            <label class="col-md-3 control-label">Recipient(s)</label>
                             <div class="col-md-9">
                                 <textarea v-model="email.toEmail"  class="form-control" rows="5"></textarea>
                                 <span class="help-block"><small>Comma separated email addresses.</small></span>
